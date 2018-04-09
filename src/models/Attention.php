@@ -36,7 +36,7 @@ class Attention extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::class
+            TimestampBehavior::class,
         ];
     }
 
