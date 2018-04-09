@@ -10,8 +10,8 @@ namespace yuncms\attention\frontend\controllers;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yuncms\web\Controller;
 use yuncms\user\models\User;
 
 /**
@@ -25,7 +25,7 @@ class SpaceController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -47,6 +47,7 @@ class SpaceController extends Controller
      * 我的粉丝
      * @param int $id
      * @return string
+     * @throws NotFoundHttpException
      */
     public function actionFollower($id)
     {
