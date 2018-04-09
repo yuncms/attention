@@ -26,6 +26,6 @@ class Follow extends Attention
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'model_id']);
+        return $this->hasOne(User::class, ['id' => 'model_id']);
     }
 }

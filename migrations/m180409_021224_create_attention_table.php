@@ -1,12 +1,20 @@
 <?php
 
-namespace yuncms\attention\migrations;
+use yuncms\db\Migration;
 
-use yii\db\Migration;
-
-class M171116071124Create_attention_table extends Migration
+/**
+ * Handles the creation of table `attention`.
+ */
+class m180409_021224_create_attention_table extends Migration
 {
+    /**
+     * @var string The table name.
+     */
+    public $tableName = '{{%attentions}}';
 
+    /**
+     * {@inheritdoc}
+     */
     public function safeUp()
     {
         $tableOptions = null;
@@ -18,7 +26,7 @@ class M171116071124Create_attention_table extends Migration
         /**
          * 用户关注表
          */
-        $this->createTable('{{%attentions}}', [
+        $this->createTable($this->tableName, [
             'id' => $this->primaryKey()->unsigned()->comment('Id'),
             'user_id' => $this->integer()->unsigned()->notNull()->comment('User Id'),
             'model_id' => $this->integer()->notNull()->comment('Model Id'),
@@ -27,28 +35,15 @@ class M171116071124Create_attention_table extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull()->comment('Updated At'),
         ], $tableOptions);
 
-        $this->addForeignKey('{{%attentions_ibfk_1}}', '{{%attentions}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
-        $this->createIndex('attentions_index', '{{%attentions}}', ['user_id', 'model_id', 'model_class'], true);
+        $this->addForeignKey('attentions_fk_1', $this->tableName, 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
+        $this->createIndex('attentions_index', $this->tableName, ['user_id', 'model_id', 'model_class'], true);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function safeDown()
     {
-        $this->dropTable('{{%test}}');
+        $this->dropTable($this->tableName);
     }
-
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "M171116071124Create_attention_table cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

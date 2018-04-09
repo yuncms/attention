@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
-use yii\helpers\Html;
-use yii\widgets\ListView;
+use yuncms\helpers\Html;
+use yuncms\widgets\ListView;
 use yii\bootstrap\Nav;
 use yuncms\user\models\User;
 
@@ -14,20 +14,20 @@ $this->context->layout = '@yuncms/space/frontend/views/layouts/space';
 $this->params['user'] = $model;
 
 if ($type == 'questions') {
-    $what = Yii::t('attention', 'Questions');
+    $what = Yii::t('yuncms/attention', 'Questions');
 } else if ($type == 'users') {
-    $what = Yii::t('attention', 'Users');
+    $what = Yii::t('yuncms/attention', 'Users');
 } else {
     $what = '';
 }
 
 if (!Yii::$app->user->isGuest && Yii::$app->user->id == $model->id) {//Me
-    $this->title = Yii::t('attention', '{who} followed {what}', [
-        'who' => Yii::t('attention', 'My'),
+    $this->title = Yii::t('yuncms/attention', '{who} followed {what}', [
+        'who' => Yii::t('yuncms/attention', 'My'),
         'what' => $what
     ]);
 } else {
-    $this->title = Yii::t('attention', '{who} followed {what}', [
+    $this->title = Yii::t('yuncms/attention', '{who} followed {what}', [
         'who' => Html::encode($model->nickname),
         'what' => $what
     ]);
@@ -39,11 +39,11 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->id == $model->id) {//Me
         'options' => ['class' => 'nav nav-tabs'],
         'items' => [
             //问答
-            ['label' => Yii::t('attention', 'Questions'), 'url' => ['/attention/space/index', 'id' => $model->id, 'type' => 'questions'], 'visible' => Yii::$app->hasModule('question')],
+            ['label' => Yii::t('yuncms/attention', 'Questions'), 'url' => ['/attention/space/index', 'id' => $model->id, 'type' => 'questions'], 'visible' => Yii::$app->hasModule('question')],
             //用户
-            ['label' => Yii::t('attention', 'Broadcaster'), 'url' => ['/attention/space/index', 'id' => $model->id, 'type' => 'users'],],
+            ['label' => Yii::t('yuncms/attention', 'Broadcaster'), 'url' => ['/attention/space/index', 'id' => $model->id, 'type' => 'users'],],
             //用户
-            ['label' => Yii::t('attention', 'Lives'), 'url' => ['/attention/space/index', 'id' => $model->id, 'type' => 'lives'], 'visible' => Yii::$app->hasModule('live')]
+            ['label' => Yii::t('yuncms/attention', 'Lives'), 'url' => ['/attention/space/index', 'id' => $model->id, 'type' => 'lives'], 'visible' => Yii::$app->hasModule('live')]
         ]
     ]); ?>
 

@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-use yii\helpers\Html;
+use yuncms\helpers\Html;
 
 /**
  * @var \yuncms\attention\models\Follow $model
@@ -12,10 +12,10 @@ use yii\helpers\Html;
         <div>
             <a href="<?= Url::to(['/user/space/view', 'id' => $model->user_id]) ?>"><?= $model->user->nickname ?></a>
             <div
-                class="stream-following-followed"><?= $model->user->extend->supports ?><?= Yii::t('attention', 'Support') ?>
-                / <?= $model->user->extend->followers ?><?= Yii::t('attention', 'Follower') ?>
+                class="stream-following-followed"><?= $model->user->extend->supports ?><?= Yii::t('yuncms/attention', 'Support') ?>
+                / <?= $model->user->extend->followers ?><?= Yii::t('yuncms/attention', 'Follower') ?>
                 <?php if (isset($model->user->extend->answers)): ?>
-                    / <?= $model->user->extend->answers ?><?= Yii::t('attention', 'Answer') ?>
+                    / <?= $model->user->extend->answers ?><?= Yii::t('yuncms/attention', 'Answer') ?>
                 <?php endif; ?>
             </div>
         </div>
@@ -24,12 +24,12 @@ use yii\helpers\Html;
         <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isFollowed(get_class($model->user), $model->model_id)): ?>
             <button type="button" class="btn btn-default btn-xs followerUser active" data-target="follow-button"
                     data-source_type="user"
-                    data-source_id="<?= $model->model_id; ?>"><?= Yii::t('attention', 'Followed') ?>
+                    data-source_id="<?= $model->model_id; ?>"><?= Yii::t('yuncms/attention', 'Followed') ?>
             </button>
         <?php else: ?>
             <button type="button" class="btn btn-default followerUser btn-xs" data-target="follow-button"
                     data-source_type="user"
-                    data-source_id="<?= $model->model_id; ?>"><?= Yii::t('attention', 'Follow') ?>
+                    data-source_id="<?= $model->model_id; ?>"><?= Yii::t('yuncms/attention', 'Follow') ?>
             </button>
         <?php endif; ?>
     </div>

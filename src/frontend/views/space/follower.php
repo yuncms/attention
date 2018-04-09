@@ -1,5 +1,5 @@
 <?php
-use yii\widgets\ListView;
+use yuncms\widgets\ListView;
 use yuncms\user\models\User;
 /**
  * @var \yii\web\View $this
@@ -9,15 +9,15 @@ use yuncms\user\models\User;
 $this->context->layout = '@yuncms/space/frontend/views/layouts/space';
 $this->params['user'] = $model;
 if (!Yii::$app->user->isGuest && Yii::$app->user->id == $model->id) {//Me
-    $who = Yii::t('attention', 'My');
+    $who = Yii::t('yuncms/attention', 'My');
 } else {
-    $who = Yii::t('attention', 'His');
+    $who = Yii::t('yuncms/attention', 'His');
 }
-$this->title = Yii::t('attention', '{who} follower', [
+$this->title = Yii::t('yuncms/attention', '{who} follower', [
     'who' => $who,
 ]);
 ?>
-<h2 class="h4"><?= $dataProvider->getTotalCount() ?> <?= Yii::t('attention', 'records') ?></h2>
+<h2 class="h4"><?= $dataProvider->getTotalCount() ?> <?= Yii::t('yuncms/attention', 'records') ?></h2>
 <div class="stream-following border-top">
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

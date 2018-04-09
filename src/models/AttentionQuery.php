@@ -2,12 +2,14 @@
 
 namespace yuncms\attention\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Attention]].
  *
  * @see Attention
  */
-class AttentionQuery extends \yii\db\ActiveQuery
+class AttentionQuery extends ActiveQuery
 {
     /**
      * @var string 模型类型
