@@ -17,7 +17,7 @@ use yuncms\rest\Controller;
 use yuncms\rest\models\User;
 
 /**
- * Class AttentionController
+ * 用户关系接口
  *
  * @author Tongle Xu <xutongle@gmail.com>
  * @since 3.0
@@ -32,6 +32,7 @@ class AttentionController extends Controller
     protected function verbs()
     {
         return array_merge(parent::verbs(), [
+            'unfollow' => ['POST'],
             'follow' => ['POST', 'DELETE'],
             'friends' => ['GET'],
             'followers' => ['GET'],
@@ -54,20 +55,40 @@ class AttentionController extends Controller
     }
 
     /**
+     * @param int $id
+     * @throws NotFoundHttpException
+     * @throws ServerErrorHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionUnfollow($id)
+    {
+        $user = $this->findUser($id);
+        if (($model = Attention::find()->where(['user_id' => Yii::$app->user->getId(), 'model_class' => \yuncms\user\models\User::class, 'model_id' => $user->id])->one()) != null) {
+            if (($model->delete()) != false) {
+                Yii::$app->getResponse()->setStatusCode(204);
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            }
+        } else {
+            throw new NotFoundHttpException("You are not following this user.");
+        }
+    }
+
+    /**
      * 关注别人
      * @param integer $id
      * @return Attention
      * @throws MethodNotAllowedHttpException
      * @throws NotFoundHttpException
      * @throws ServerErrorHttpException
-     * @throws \Exception
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
     public function actionFollow($id)
     {
-        $user = $this->findUser($id);
         if (Yii::$app->request->isPost) {
+            $user = $this->findUser($id);
             /** @var Attention $model */
             if (($model = Attention::find()->where(['user_id' => Yii::$app->user->getId(), 'model_class' => \yuncms\user\models\User::class, 'model_id' => $user->id])->one()) != null) {
                 Yii::$app->getResponse()->setStatusCode(200);
@@ -85,17 +106,10 @@ class AttentionController extends Controller
                 return $model;
             }
         } else if (Yii::$app->request->isDelete) {
-            if (($model = Attention::find()->where(['user_id' => Yii::$app->user->getId(), 'model_class' => \yuncms\user\models\User::class, 'model_id' => $user->id])->one()) != null) {
-                if (($model->delete()) != false) {
-                    Yii::$app->getResponse()->setStatusCode(204);
-                } elseif (!$model->hasErrors()) {
-                    throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-                }
-            } else {
-                throw new NotFoundHttpException("Object not found.");
-            }
+            return $this->actionUnfollow($id);
+        } else {
+            throw new MethodNotAllowedHttpException();
         }
-        throw new MethodNotAllowedHttpException();
     }
 
     /**
