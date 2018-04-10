@@ -7,6 +7,8 @@
 
 namespace yuncms\attention\rest\models;
 
+use yuncms\rest\models\User;
+
 /**
  * Class Attention
  *
@@ -15,5 +17,11 @@ namespace yuncms\attention\rest\models;
  */
 class Attention extends \yuncms\attention\models\Attention
 {
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
 }
