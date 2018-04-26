@@ -27,12 +27,12 @@ class m180409_021224_create_attention_table extends Migration
          * 用户关注表
          */
         $this->createTable($this->tableName, [
-            'id' => $this->primaryKey()->unsigned()->comment('Id'),
-            'user_id' => $this->integer()->unsigned()->notNull()->comment('User Id'),
-            'model_id' => $this->integer()->notNull()->comment('Model Id'),
+            'id' => $this->primaryKey()->comment('Id'),
+            'user_id' => $this->unsignedInteger()->notNull()->comment('User Id'),
+            'model_id' => $this->unsignedInteger()->notNull()->comment('Model Id'),
             'model_class' => $this->string()->notNull()->comment('Model Class'),
-            'created_at' => $this->integer()->unsigned()->notNull()->comment('Created At'),
-            'updated_at' => $this->integer()->unsigned()->notNull()->comment('Updated At'),
+            'created_at' => $this->unixTimestamp()->notNull()->comment('Created At'),
+            'updated_at' => $this->unixTimestamp()->notNull()->comment('Updated At'),
         ], $tableOptions);
 
         $this->addForeignKey('attentions_fk_1', $this->tableName, 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
