@@ -158,12 +158,12 @@ class AttentionController extends Controller
         return [
             'target' => [
                 "id" => $source->id,
-                "username" => $source->username,
+                "nickname" => $source->username,
                 "following" => Attention::find()->where(['user_id' => $source->id, 'model_class' => \yuncms\user\models\User::class, 'model_id' => $target->id])->exists()
             ],
             'source' => [
                 "id" => $target->id,
-                "screen_name" => $target->username,
+                "nickname" => $target->username,
                 "following" => Attention::find()->where(['user_id' => $target->id, 'model_class' => \yuncms\user\models\User::class, 'model_id' => $source->id])->exists()
             ],
         ];
